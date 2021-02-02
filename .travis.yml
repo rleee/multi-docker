@@ -9,14 +9,14 @@ script:
   - docker run -e CI=true rleee/for-running-react-test npm run test
 
 after_success:
-  - docker build -t rleee/multi-client ./client
-  - docker build -t rleee/multi-nginx ./nginx
-  - docker build -t rleee/multi-server ./server
-  - docker build -t rleee/multi-worker ./worker
+  - docker build -t danlee0150/multi-client ./client
+  - docker build -t danlee0150/multi-nginx ./nginx
+  - docker build -t danlee0150/multi-server ./server
+  - docker build -t danlee0150/multi-worker ./worker
   # Login to docker CLI for pushing docker image to docker hub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Push docker image to docker hub
-  - docker push rleee/multi-client
-  - docker push rleee/multi-nginx
-  - docker push rleee/multi-server
-  - docker push rleee/multi-worker
+  - docker push danlee0150/multi-client
+  - docker push danlee0150/multi-nginx
+  - docker push danlee0150/multi-server
+  - docker push danlee0150/multi-worker
