@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "express": "*",
+    "pg": "*",
+    "redis": "2.8.0",
+    "cors": "2.8.4",
+    "nodemon": "1.18.3",
+    "body-parser": "*",
+    "sequelize":"*"
+  },
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node index.js"
+  }
+}

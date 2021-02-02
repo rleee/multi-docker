@@ -1,0 +1,91 @@
+docker run hello-world
+
+docker run busybox echo hi there
+- busybox: adalah image
+- echo: adalah overwrite command, jadi hasilnya akan print "hi there"
+note: command can only be attached once, kalo udah create dengan command itu -
+ngga bisa diganti lagi, musti create container baru
+
+docker run busybox ls
+- ls: akan print folder yang ada dalam busybox
+
+docker ps
+> command ini akan list out container yang sedang run
+
+docker ps --all
+> command yang akan list out container yang pernah run dan yang sudah nonaktif
+
+docker run = docker create + docker start
+> docker run are creating and starting the image (2 separate process)
+and print all the log for the container
+
+docker run -d ab295bacf76e
+- -d: run docker di background
+
+docker start -a ab295bacf76e
+- -a: watch and printing any output from the container to terminal
+- ab295bacf76e: container id
+note: without -a, docker will only start and wont print the log output
+
+docker system prune
+> clear stopped containers, and clearing cache
+
+docker logs ab295bacf76e
+> will only print the logs happen on container after container exits
+
+docker stop ab295bacf76e
+> shut down with clean up for the container, and additional actions on stopping -
+for 10 secs, if 10 secs not stopping it'll kill
+
+docker kill ab295bacf76e
+> kill the container directly
+
+docker exec -it ab295bacf76e redis-cli
+- exec: buat run another command
+- -it: buat bisa input ke container, tanpa ini kita ngga bs input ke terminal ini, dan akan lgsg exit
+-it sama dengan -i -t, -i buat type kedalam, -t buat print keluar log dari container dan dengan formatting
+- redis-cli: command yang buat di run di terminal exec ini
+
+docker exec -it ab295bacf76e sh
+- sh: buat lgsg masuk ke terminal container itu, biasa lg create dan attach command ini
+
+docker build .
+> build the Dockerfile in current folder
+
+docker build -t rudilee/suatuproject:latest .
+> ini buat kasih nama container
+- -t : tag this build
+
+docker commit -c 'CMD ["redis-server"]' ab295bacf76e
+> manually copy image and assign new default command
+
+docker run -p 5000:8800 ab295bacf76e
+> map machine port to container port
+- 5000: machine port
+- 8800: container port in the index.js
+
+docker build -f Dockerfile.dev .
+> specifiy which docker file to run in current folder
+
+docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app ab295bacf76e
+> this is for file mapping, if file in dev end change, it'll also change in container
+- -v /app/node_modules : means dont map the /app/node_module
+- -v $(pwd):/app :
+     - pwd = present work dir
+     - :/app = we want to map the app folder, to workdir outside container. without the (:) it would mean differently
+
+docker-compose.yml
+> buat build multiple container bersamaan dan set up sekaligus
+
+docker-compose up
+> sama dengan docker run ab295bacf76e, jadi dengan docker-compose up dia akan lgsg cari docker-compose.yml di folder skrg
+
+docker-compose up --build
+> sama dengan docker build . + docker run ab295bacf76e
+
+docker-compose up
+> sama dengan docker run -d ab295bacf76e
+
+docker-compose down
+> sama dengan docker stop ab295bacf76e
+
